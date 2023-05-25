@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>PInelands: Cape Town</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="data/PropertyBoundary_1.js"></script>
+        <script src="data/LeasedProperties_2.js"></script>
+        <script src="data/PropertiesforRent_3.js"></script>
+        <script src="data/PropertiesforSale_4.js"></script>
+        <script src="data/SoldProperties_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:18, minZoom:14
+        }).fitBounds([[-33.959163166463924,18.48401120554229],[-33.912455316514325,18.53489817890843]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 14,
+            maxZoom: 18,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_PropertyBoundary_1(feature, layer) {
+        }
+
+        function style_PropertyBoundary_1_0() {
+            return {
+                pane: 'pane_PropertyBoundary_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_PropertyBoundary_1');
+        map.getPane('pane_PropertyBoundary_1').style.zIndex = 401;
+        map.getPane('pane_PropertyBoundary_1').style['mix-blend-mode'] = 'normal';
+        var layer_PropertyBoundary_1 = new L.geoJson(json_PropertyBoundary_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_PropertyBoundary_1',
+            layerName: 'layer_PropertyBoundary_1',
+            pane: 'pane_PropertyBoundary_1',
+            onEachFeature: pop_PropertyBoundary_1,
+            style: style_PropertyBoundary_1_0,
+        });
+        bounds_group.addLayer(layer_PropertyBoundary_1);
+        map.addLayer(layer_PropertyBoundary_1);
+        function pop_LeasedProperties_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Bedrooms</th>\
+                        <td>' + (feature.properties['bedrooms'] !== null ? autolinker.link(feature.properties['bedrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bathrooms</th>\
+                        <td>' + (feature.properties['bathrooms'] !== null ? autolinker.link(feature.properties['bathrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dining Rooms</th>\
+                        <td>' + (feature.properties['dining_roo'] !== null ? autolinker.link(feature.properties['dining_roo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Garages</th>\
+                        <td>' + (feature.properties['garages'] !== null ? autolinker.link(feature.properties['garages'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Lounges</th>\
+                        <td>' + (feature.properties['lounges'] !== null ? autolinker.link(feature.properties['lounges'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Open Plan</th>\
+                        <td>' + (feature.properties['open_plan'] !== null ? autolinker.link(feature.properties['open_plan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Pool</th>\
+                        <td>' + (feature.properties['pool'] !== null ? autolinker.link(feature.properties['pool'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Property ID</strong><br />' + (feature.properties['sl_land_pr'] !== null ? autolinker.link(feature.properties['sl_land_pr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Number</strong><br />' + (feature.properties['adr_no'] !== null ? autolinker.link(feature.properties['adr_no'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Street</strong><br />' + (feature.properties['str_name'] !== null ? autolinker.link(feature.properties['str_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Suburb</strong><br />' + (feature.properties['ofc_sbrb_n'] !== null ? autolinker.link(feature.properties['ofc_sbrb_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LeasedProperties_2_0() {
+            return {
+                pane: 'pane_LeasedProperties_2',
+                opacity: 1,
+                color: 'rgba(56,128,54,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,173,30,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_LeasedProperties_2');
+        map.getPane('pane_LeasedProperties_2').style.zIndex = 402;
+        map.getPane('pane_LeasedProperties_2').style['mix-blend-mode'] = 'normal';
+        var layer_LeasedProperties_2 = new L.geoJson(json_LeasedProperties_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LeasedProperties_2',
+            layerName: 'layer_LeasedProperties_2',
+            pane: 'pane_LeasedProperties_2',
+            onEachFeature: pop_LeasedProperties_2,
+            style: style_LeasedProperties_2_0,
+        });
+        bounds_group.addLayer(layer_LeasedProperties_2);
+        map.addLayer(layer_LeasedProperties_2);
+        function pop_PropertiesforRent_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Bedrooms</th>\
+                        <td>' + (feature.properties['bedrooms'] !== null ? autolinker.link(feature.properties['bedrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bathrooms</th>\
+                        <td>' + (feature.properties['bathrooms'] !== null ? autolinker.link(feature.properties['bathrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dining Room</th>\
+                        <td>' + (feature.properties['dining_roo'] !== null ? autolinker.link(feature.properties['dining_roo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Garages</th>\
+                        <td>' + (feature.properties['garages'] !== null ? autolinker.link(feature.properties['garages'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Lounges</th>\
+                        <td>' + (feature.properties['lounges'] !== null ? autolinker.link(feature.properties['lounges'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Open Plan</th>\
+                        <td>' + (feature.properties['open_plan'] !== null ? autolinker.link(feature.properties['open_plan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Pool</th>\
+                        <td>' + (feature.properties['pool'] !== null ? autolinker.link(feature.properties['pool'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Rent p/m (R)</strong><br />' + (feature.properties['rent_pm'] !== null ? autolinker.link(feature.properties['rent_pm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Property ID</strong><br />' + (feature.properties['sl_land_pr'] !== null ? autolinker.link(feature.properties['sl_land_pr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Number</strong><br />' + (feature.properties['adr_no'] !== null ? autolinker.link(feature.properties['adr_no'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Street</strong><br />' + (feature.properties['str_name'] !== null ? autolinker.link(feature.properties['str_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Suburb</strong><br />' + (feature.properties['ofc_sbrb_n'] !== null ? autolinker.link(feature.properties['ofc_sbrb_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PropertiesforRent_3_0() {
+            return {
+                pane: 'pane_PropertiesforRent_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(110,217,192,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PropertiesforRent_3');
+        map.getPane('pane_PropertiesforRent_3').style.zIndex = 403;
+        map.getPane('pane_PropertiesforRent_3').style['mix-blend-mode'] = 'normal';
+        var layer_PropertiesforRent_3 = new L.geoJson(json_PropertiesforRent_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PropertiesforRent_3',
+            layerName: 'layer_PropertiesforRent_3',
+            pane: 'pane_PropertiesforRent_3',
+            onEachFeature: pop_PropertiesforRent_3,
+            style: style_PropertiesforRent_3_0,
+        });
+        bounds_group.addLayer(layer_PropertiesforRent_3);
+        map.addLayer(layer_PropertiesforRent_3);
+        function pop_PropertiesforSale_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Bedrooms</th>\
+                        <td>' + (feature.properties['bedrooms'] !== null ? autolinker.link(feature.properties['bedrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bathrooms</th>\
+                        <td>' + (feature.properties['bathrooms'] !== null ? autolinker.link(feature.properties['bathrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dining Rooms</th>\
+                        <td>' + (feature.properties['dining_roo'] !== null ? autolinker.link(feature.properties['dining_roo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Garages</th>\
+                        <td>' + (feature.properties['garages'] !== null ? autolinker.link(feature.properties['garages'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Open Plan</th>\
+                        <td>' + (feature.properties['open_plan'] !== null ? autolinker.link(feature.properties['open_plan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Lounges</th>\
+                        <td>' + (feature.properties['lounges'] !== null ? autolinker.link(feature.properties['lounges'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Pool</th>\
+                        <td>' + (feature.properties['pool'] !== null ? autolinker.link(feature.properties['pool'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Market Value (R)</strong><br />' + (feature.properties['market_val'] !== null ? autolinker.link(feature.properties['market_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Property ID</strong><br />' + (feature.properties['sl_land_pr'] !== null ? autolinker.link(feature.properties['sl_land_pr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Number</strong><br />' + (feature.properties['adr_no'] !== null ? autolinker.link(feature.properties['adr_no'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Street </strong><br />' + (feature.properties['str_name'] !== null ? autolinker.link(feature.properties['str_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Suburb</strong><br />' + (feature.properties['ofc_sbrb_n'] !== null ? autolinker.link(feature.properties['ofc_sbrb_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PropertiesforSale_4_0() {
+            return {
+                pane: 'pane_PropertiesforSale_4',
+                opacity: 1,
+                color: 'rgba(56,128,54,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(43,232,36,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PropertiesforSale_4');
+        map.getPane('pane_PropertiesforSale_4').style.zIndex = 404;
+        map.getPane('pane_PropertiesforSale_4').style['mix-blend-mode'] = 'normal';
+        var layer_PropertiesforSale_4 = new L.geoJson(json_PropertiesforSale_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PropertiesforSale_4',
+            layerName: 'layer_PropertiesforSale_4',
+            pane: 'pane_PropertiesforSale_4',
+            onEachFeature: pop_PropertiesforSale_4,
+            style: style_PropertiesforSale_4_0,
+        });
+        bounds_group.addLayer(layer_PropertiesforSale_4);
+        map.addLayer(layer_PropertiesforSale_4);
+        function pop_SoldProperties_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Property ID</strong><br />' + (feature.properties['sl_land_pr'] !== null ? autolinker.link(feature.properties['sl_land_pr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Number</strong><br />' + (feature.properties['adr_no'] !== null ? autolinker.link(feature.properties['adr_no'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Street </strong><br />' + (feature.properties['str_name'] !== null ? autolinker.link(feature.properties['str_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Suburb</strong><br />' + (feature.properties['ofc_sbrb_n'] !== null ? autolinker.link(feature.properties['ofc_sbrb_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bedrooms</th>\
+                        <td>' + (feature.properties['bedrooms'] !== null ? autolinker.link(feature.properties['bedrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bathrooms</th>\
+                        <td>' + (feature.properties['bathrooms'] !== null ? autolinker.link(feature.properties['bathrooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dining Rooms</th>\
+                        <td>' + (feature.properties['dining_roo'] !== null ? autolinker.link(feature.properties['dining_roo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Garages</th>\
+                        <td>' + (feature.properties['garages'] !== null ? autolinker.link(feature.properties['garages'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Lounges</th>\
+                        <td>' + (feature.properties['lounges'] !== null ? autolinker.link(feature.properties['lounges'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Open Plan</th>\
+                        <td>' + (feature.properties['open_plan'] !== null ? autolinker.link(feature.properties['open_plan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Pool</th>\
+                        <td>' + (feature.properties['pool'] !== null ? autolinker.link(feature.properties['pool'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SoldProperties_5_0() {
+            return {
+                pane: 'pane_SoldProperties_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,31,60,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_SoldProperties_5');
+        map.getPane('pane_SoldProperties_5').style.zIndex = 405;
+        map.getPane('pane_SoldProperties_5').style['mix-blend-mode'] = 'normal';
+        var layer_SoldProperties_5 = new L.geoJson(json_SoldProperties_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SoldProperties_5',
+            layerName: 'layer_SoldProperties_5',
+            pane: 'pane_SoldProperties_5',
+            onEachFeature: pop_SoldProperties_5,
+            style: style_SoldProperties_5_0,
+        });
+        bounds_group.addLayer(layer_SoldProperties_5);
+        map.addLayer(layer_SoldProperties_5);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>PInelands: Cape Town</h2>';
+            };
+            title.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/SoldProperties_5.png" /> Sold Properties': layer_SoldProperties_5,'<img src="legend/PropertiesforSale_4.png" /> Properties for Sale': layer_PropertiesforSale_4,'<img src="legend/PropertiesforRent_3.png" /> Properties for Rent': layer_PropertiesforRent_3,'<img src="legend/LeasedProperties_2.png" /> Leased Properties': layer_LeasedProperties_2,'<img src="legend/PropertyBoundary_1.png" /> Property Boundary': layer_PropertyBoundary_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
